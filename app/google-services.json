@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "798713585317",
+    "firebase_url": "https://capturetodo-9e0b7.firebaseio.com",
+    "project_id": "capturetodo-9e0b7",
+    "storage_bucket": "capturetodo-9e0b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798713585317:android:f1b8d66f6022bd14fe374c",
+        "android_client_info": {
+          "package_name": "com.capturetodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798713585317-t9s2qvuppsvc5uqtndpgre9i3pt52n2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capturetodo",
+            "certificate_hash": "fc946579d4d04c77046d8b775c51c49670a3c819"
+          }
+        },
+        {
+          "client_id": "798713585317-9g7ktn4f321bma2385j3hgrqssrgatah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALSxWBQTN4usWAfHW0wLjzFWz28AkzF0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798713585317-9g7ktn4f321bma2385j3hgrqssrgatah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

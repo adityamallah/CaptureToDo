@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Post_Area"
+    android:background="@drawable/background_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/postImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/coloss"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/postCameraImg"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_camera_alt_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/postImageView"
+                    app:layout_constraintStart_toStartOf="@id/postImageView"
+                    app:layout_constraintTop_toTopOf="@+id/postImageView">
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/postUploadIIM"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_file_upload_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/postCameraImg"
+                    app:layout_constraintEnd_toEndOf="@+id/postImageView"
+                    app:layout_constraintTop_toTopOf="@+id/postCameraImg">
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/postUserNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="User Name Here"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/postImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/postImageView">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/postDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Today"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="@+id/postUserNameTV"
+                    app:layout_constraintEnd_toEndOf="@+id/postImageView"
+                    app:layout_constraintStart_toEndOf="@+id/postUserNameTV"
+                    app:layout_constraintTop_toTopOf="@+id/postUserNameTV">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/postTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/post_area_edittext"
+                    android:hint="Title"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="@+id/postDateTV"
+                    app:layout_constraintStart_toStartOf="@+id/postUserNameTV"
+                    app:layout_constraintTop_toBottomOf="@+id/postUserNameTV">
+                </EditText>
+
+                <EditText
+                    android:id="@+id/postThoughts"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/post_area_edittext"
+                    android:hint="Description"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="@+id/postTitle"
+                    app:layout_constraintStart_toStartOf="@+id/postTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/postTitle">
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_done_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Timer Here"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/postThoughts">
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/postSubmitBtn"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_button"
+            android:text="SUBMIT"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
