@@ -4,22 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Post_Area"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/background_gradient"
+    tools:context=".Post_Area">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp">
 
+        <TextView
+            android:id="@+id/postLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="CAPTURETODO"
+            android:textColor="@color/colorWhite"
+            android:textSize="29sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timelineBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/timelineBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/postLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="550dp"
+            android:layout_marginTop="5dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/postLogo">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -34,8 +59,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </ImageView>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/postCameraImg"
@@ -45,8 +69,7 @@
                     android:src="@drawable/ic_camera_alt_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/postImageView"
                     app:layout_constraintStart_toStartOf="@id/postImageView"
-                    app:layout_constraintTop_toTopOf="@+id/postImageView">
-                </ImageView>
+                    app:layout_constraintTop_toTopOf="@+id/postImageView" />
 
                 <ImageView
                     android:id="@+id/postUploadIIM"
@@ -56,8 +79,7 @@
                     android:src="@drawable/ic_file_upload_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/postCameraImg"
                     app:layout_constraintEnd_toEndOf="@+id/postImageView"
-                    app:layout_constraintTop_toTopOf="@+id/postCameraImg">
-                </ImageView>
+                    app:layout_constraintTop_toTopOf="@+id/postCameraImg" />
 
                 <TextView
                     android:id="@+id/postUserNameTV"
@@ -70,8 +92,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/postImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/postImageView">
-                </TextView>
+                    app:layout_constraintTop_toBottomOf="@+id/postImageView" />
 
                 <TextView
                     android:id="@+id/postDateTV"
@@ -85,8 +106,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/postUserNameTV"
                     app:layout_constraintEnd_toEndOf="@+id/postImageView"
                     app:layout_constraintStart_toEndOf="@+id/postUserNameTV"
-                    app:layout_constraintTop_toTopOf="@+id/postUserNameTV">
-                </TextView>
+                    app:layout_constraintTop_toTopOf="@+id/postUserNameTV" />
 
                 <EditText
                     android:id="@+id/postTitle"
@@ -101,8 +121,7 @@
                     android:paddingEnd="15dp"
                     app:layout_constraintEnd_toEndOf="@+id/postDateTV"
                     app:layout_constraintStart_toStartOf="@+id/postUserNameTV"
-                    app:layout_constraintTop_toBottomOf="@+id/postUserNameTV">
-                </EditText>
+                    app:layout_constraintTop_toBottomOf="@+id/postUserNameTV" />
 
                 <EditText
                     android:id="@+id/postThoughts"
@@ -115,20 +134,20 @@
                     android:hint="Description"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintBottom_toTopOf="@+id/postDone"
                     app:layout_constraintEnd_toEndOf="@+id/postTitle"
                     app:layout_constraintStart_toStartOf="@+id/postTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/postTitle">
-                </EditText>
+                    app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/postDone"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_done_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="ContentDescription">
                 </ImageView>
 
                 <TextView
@@ -138,7 +157,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/postDone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/postThoughts">
                 </TextView>
@@ -153,8 +172,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_button"
             android:text="SUBMIT"
-            android:textColor="@color/colorWhite"
             android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

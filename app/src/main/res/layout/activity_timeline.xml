@@ -21,9 +21,8 @@
             android:textColor="@color/colorWhite"
             android:textSize="29sp"
             app:layout_constraintEnd_toStartOf="@+id/timelineLogout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </TextView>
+            app:layout_constraintStart_toEndOf="@+id/timelineBack"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/timelineLogout"
@@ -35,6 +34,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         </ImageView>
+
+        <ImageView
+            android:id="@+id/timelineBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_library_add_black_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/timelineRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timelineLogo"
+            app:layout_constraintVertical_bias="0.0" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

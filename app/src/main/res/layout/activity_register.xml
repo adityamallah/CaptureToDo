@@ -93,17 +93,29 @@
             app:layout_constraintTop_toBottomOf="@+id/registerConfirmPassword">
         </EditText>
 
+        <com.capturetodo.utils.GifImageView
+            android:id="@+id/registerLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/registerBtn"
+            app:layout_constraintEnd_toEndOf="@+id/registerFullname"
+            app:layout_constraintStart_toStartOf="@+id/registerFullname"
+            app:layout_constraintTop_toBottomOf="@+id/registerFullname">
+        </com.capturetodo.utils.GifImageView>
+
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/background_button"
             android:text="Register"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="@+id/registerFullname"
-            app:layout_constraintStart_toStartOf="@+id/registerFullname"
-            app:layout_constraintTop_toBottomOf="@+id/registerFullname"> </Button>
+            app:layout_constraintEnd_toEndOf="@+id/registerLoader"
+            app:layout_constraintStart_toStartOf="@+id/registerLoader"
+            app:layout_constraintTop_toBottomOf="@+id/registerLoader"> </Button>
 
         <TextView
             android:id="@+id/registerAlreadyHaveAccount"

@@ -24,6 +24,17 @@
             app:layout_constraintTop_toTopOf="parent">
         </TextView>
 
+        <com.capturetodo.utils.GifImageView
+            android:id="@+id/splashScreenGifLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/splashScreeLogo"
+            app:layout_constraintStart_toStartOf="@+id/splashScreeLogo"
+            app:layout_constraintTop_toBottomOf="@+id/splashScreeLogo">
+        </com.capturetodo.utils.GifImageView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
