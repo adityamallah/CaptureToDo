@@ -3,7 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.capturetodo">
 
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+
+
     <application
+        android:name=".utils.CaptureToDoApi"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,17 +19,37 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Timeline"></activity>
-        <activity android:name=".Post_Area" />
-        <activity android:name=".Register" />
-        <activity android:name=".Login" />
-        <activity android:name=".SplashScreen">
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Timeline"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Post_Area" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Register" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Login" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.capturetodo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
 </manifest>

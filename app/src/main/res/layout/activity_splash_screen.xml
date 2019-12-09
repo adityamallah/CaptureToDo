@@ -24,16 +24,23 @@
             app:layout_constraintTop_toTopOf="parent">
         </TextView>
 
-        <com.capturetodo.utils.GifImageView
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/splashScreenGifLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleY="1"
+            android:scaleX="1"
+            android:scaleType="centerCrop"
+            app:lottie_fileName="loader.json"
             android:layout_marginTop="50dp"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/splashScreeLogo"
             app:layout_constraintStart_toStartOf="@+id/splashScreeLogo"
             app:layout_constraintTop_toBottomOf="@+id/splashScreeLogo">
-        </com.capturetodo.utils.GifImageView>
+        </com.airbnb.lottie.LottieAnimationView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

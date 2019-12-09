@@ -59,29 +59,35 @@
             app:layout_constraintTop_toBottomOf="@+id/loginEmailId">
         </EditText>
 
-        <com.capturetodo.utils.GifImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loginLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="centerCrop"
+            android:scaleX="1"
+            android:scaleY="1"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/registerBtn"
+            app:layout_constraintBottom_toTopOf="@+id/loginBtn"
             app:layout_constraintEnd_toEndOf="@+id/loginPassword"
             app:layout_constraintStart_toStartOf="@+id/loginPassword"
-            app:layout_constraintTop_toBottomOf="@+id/loginPassword">
-        </com.capturetodo.utils.GifImageView>
+            app:layout_constraintTop_toBottomOf="@id/loginPassword"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loader.json"
+            app:lottie_loop="true" />
 
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="110dp"
             android:background="@drawable/background_button"
             android:text="Login"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@+id/loginPassword"
             app:layout_constraintStart_toStartOf="@+id/loginPassword"
-            app:layout_constraintTop_toBottomOf="@+id/loginLoader">
+            app:layout_constraintTop_toBottomOf="@id/loginPassword">
         </Button>
 
         <TextView

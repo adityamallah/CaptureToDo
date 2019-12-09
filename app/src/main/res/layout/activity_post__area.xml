@@ -10,30 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp">
-
-        <TextView
-            android:id="@+id/postLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="CAPTURETODO"
-            android:textColor="@color/colorWhite"
-            android:textSize="29sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/timelineBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/timelineBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_chevron_left_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/postLogo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
 
 
         <androidx.cardview.widget.CardView
@@ -44,7 +23,7 @@
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postLogo">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -62,7 +41,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/postCameraImg"
+                    android:id="@+id/postCameraIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="20dp"
@@ -72,14 +51,14 @@
                     app:layout_constraintTop_toTopOf="@+id/postImageView" />
 
                 <ImageView
-                    android:id="@+id/postUploadIIM"
+                    android:id="@+id/postUploadIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_file_upload_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/postCameraImg"
+                    app:layout_constraintBottom_toBottomOf="@+id/postCameraIcon"
                     app:layout_constraintEnd_toEndOf="@+id/postImageView"
-                    app:layout_constraintTop_toTopOf="@+id/postCameraImg" />
+                    app:layout_constraintTop_toTopOf="@+id/postCameraIcon" />
 
                 <TextView
                     android:id="@+id/postUserNameTV"
@@ -115,6 +94,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="2dp"
+                    android:maxLength="30"
                     android:background="@drawable/post_area_edittext"
                     android:hint="Title"
                     android:paddingStart="15dp"
@@ -124,12 +104,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/postUserNameTV" />
 
                 <EditText
-                    android:id="@+id/postThoughts"
+                    android:id="@+id/postDescription"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="2dp"
+                    android:maxLength="155"
                     android:background="@drawable/post_area_edittext"
                     android:hint="Description"
                     android:paddingStart="15dp"
@@ -147,8 +128,7 @@
                     android:src="@drawable/ic_done_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="ContentDescription">
-                </ImageView>
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,12 +139,39 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/postDone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/postThoughts">
+                    app:layout_constraintTop_toBottomOf="@+id/postDescription">
                 </TextView>
+
+                <ImageView
+                    android:id="@+id/timelineBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_chevron_left_black_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/postLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/postSubmitBtn"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loader.json"
+            app:lottie_loop="true">
+
+        </com.airbnb.lottie.LottieAnimationView>
 
         <Button
             android:id="@+id/postSubmitBtn"
@@ -177,9 +184,8 @@
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
+            app:layout_constraintStart_toStartOf="@+id/cardView">
+        </Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
