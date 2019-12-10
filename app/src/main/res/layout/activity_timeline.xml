@@ -21,7 +21,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="29sp"
             app:layout_constraintEnd_toStartOf="@+id/timelineLogout"
-            app:layout_constraintStart_toEndOf="@+id/timelineBack"
+            app:layout_constraintStart_toEndOf="@+id/timelineAdd"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -36,7 +36,7 @@
         </ImageView>
 
         <ImageView
-            android:id="@+id/timelineBack"
+            android:id="@+id/timelineAdd"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"

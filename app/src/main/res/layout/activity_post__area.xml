@@ -188,4 +188,17 @@
         </Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/postRibbonOnSub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:visibility="invisible"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="ribbon.json"
+        app:lottie_loop="true">
+    </com.airbnb.lottie.LottieAnimationView>
+
 </RelativeLayout>

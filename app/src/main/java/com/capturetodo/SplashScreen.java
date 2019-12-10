@@ -27,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent i = new Intent(SplashScreen.this, Post_Area.class);
+                Intent i = new Intent(SplashScreen.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

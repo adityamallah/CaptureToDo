@@ -8,12 +8,12 @@ import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,12 +23,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.capturetodo.model.ToDo_Model;
 import com.capturetodo.utils.CaptureToDoApi;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +54,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     private EditText title, description;
 
     //Image View Widgets
-    private ImageView camera, upload, done, backImg;
+    private ImageView camera, upload, done, backImg, backBtn;
 
     //Text View Widgets
     private TextView fullName, date;
@@ -53,6 +65,9 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     //User Details in strings
     private String uFullname;
     private String uEmailId;
+
+    //Airbnb assets
+    LottieAnimationView pLoader, pCeleSub;
 
     //Access Camera Here
     private String currentPhotoPath;
@@ -66,6 +81,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     //Firestore Connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("TODOS");
+    private DocumentReference dr;
     private StorageReference storageReference;
     private Uri imageUri;
 
@@ -76,6 +92,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_post__area);
         mAuth = FirebaseAuth.getInstance();
 
+
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         title = findViewById(R.id.postTitle);
         description = findViewById(R.id.postDescription);
@@ -89,12 +107,19 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         date = findViewById(R.id.postDateTV);
         submit = findViewById(R.id.postSubmitBtn);
         submit.setOnClickListener(this);
+        backBtn = findViewById(R.id.timelineBack);
+        backBtn.setOnClickListener(this);
+
+        pLoader = findViewById(R.id.postLoader);
+        pCeleSub = findViewById(R.id.postRibbonOnSub);
 
         if(CaptureToDoApi.getCaptureToDoApi() != null ){
             uFullname = CaptureToDoApi.getCaptureToDoApi().getFullName();
             uEmailId = CaptureToDoApi.getCaptureToDoApi().getEmailId();
 
             fullName.setText(uFullname);
+        }else{
+            collectionSetDetails();
         }
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -148,6 +173,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /// On click for all ids HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
@@ -166,9 +192,15 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             case R.id.postSubmitBtn:
                 submitBtnVerify();
                 break;
+
+            case R.id.timelineBack:
+                // Data for intent here of back button
+                backBtnIntent();
+                break;
         }
     }
 
+    //Create image file for live camera shot >>>>>>>>>>>>>>>>>>>>>>>>>
     @RequiresApi(api = Build.VERSION_CODES.N)
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -186,6 +218,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         return image;
     }
 
+
+    // Intent that puts created image in backImage view here >>>>>>>>>>>>>>>>>>
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -210,8 +244,9 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     }
 
     private void submitBtnVerify(){
-        String sTitle = title.getText().toString();
-        String sDescription = description.getText().toString();
+
+        final String sTitle = title.getText().toString().trim();
+        final String sDescription = description.getText().toString().trim();
 
         if(TextUtils.isEmpty(sTitle) && TextUtils.isEmpty(sDescription)){
             title.setError("Please enter your title here");
@@ -230,11 +265,111 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             description.setError("Please enter your description here");
             Toast.makeText(this,
                     "Please enter your description.", Toast.LENGTH_LONG).show();
-            return;
         }
         else {
+            pLoader.setVisibility(View.VISIBLE);
+            final StorageReference fiePath = storageReference.child("TODO_Images").child("TODOIMAGE"
+                    + Timestamp.now().getSeconds());
+            final String docPathUU = "TodosDocPath" + Timestamp.now().getSeconds();
+
+            dr = collectionReference.document(docPathUU);
+
+            fiePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+                    fiePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            String imageUrls = uri.toString();
+
+                            //Saving data in objects
+                            final ToDo_Model toDoModel = new ToDo_Model();
+                            toDoModel.setTitle(sTitle);
+                            toDoModel.setDescription(sDescription);
+                            toDoModel.setImgUrl(imageUrls);
+                            toDoModel.setFullName(uFullname);
+                            toDoModel.setDocPath(docPathUU);
+                            toDoModel.setEmailId(uEmailId);
+
+                            //Collection reference with Document reference revoke here
+                            dr.set(toDoModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    pLoader.setVisibility(View.INVISIBLE);
+                                    pCeleSub.setVisibility(View.VISIBLE);
+                                    boolean handler = new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            pCeleSub.setVisibility(View.INVISIBLE);
+                                            Intent i = new Intent(Post_Area.this, Timeline.class);
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    }, 4800);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    pLoader.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pLoader.setVisibility(View.INVISIBLE);
+                    Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
+                }
+            });
+
 
         }
+
+    }
+
+
+    //Upload and retrive data from Firebase>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    private void collectionSetDetails(){
+
+        collectionReference.whereEqualTo("Users" , currentUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+
+                if(e == null){
+
+                }
+                assert queryDocumentSnapshots != null;
+                if(!queryDocumentSnapshots.isEmpty()){
+
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        CaptureToDoApi captureToDoApi = new CaptureToDoApi();
+
+                        captureToDoApi.setFullName(queryDocumentSnapshot.getString("FullName"));
+                    }
+
+                }
+
+            }
+        });
+
+    }
+
+    //Backbtn Intent function here>>>>>>>>>>>>>>>>>>>>>>>>
+    private void backBtnIntent(){
+        Intent i = new Intent(Post_Area.this, Timeline.class);
+        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+        startActivity(i);
+        finish();
+
 
     }
 

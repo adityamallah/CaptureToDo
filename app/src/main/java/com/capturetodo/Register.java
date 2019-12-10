@@ -66,6 +66,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
 
+
         //Edit Text Widgets
         rFullName = findViewById(R.id.registerFullname);
         rPassword = findViewById(R.id.registerPassword);
@@ -232,7 +233,7 @@ public class Register extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        rLoader.setVisibility(View.INVISIBLE);
                                     }
                                 });
 
