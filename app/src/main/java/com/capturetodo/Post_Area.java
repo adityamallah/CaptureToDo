@@ -81,6 +81,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     //Firestore Connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("TODOS");
+    private CollectionReference collectionReferenceDocs = db.collection("Users");
     private DocumentReference dr;
     private StorageReference storageReference;
     private Uri imageUri;
@@ -118,9 +119,10 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             uEmailId = CaptureToDoApi.getCaptureToDoApi().getEmailId();
 
             fullName.setText(uFullname);
-        }else{
-            collectionSetDetails();
         }
+
+
+        //collectionSetDetails();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -163,6 +165,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         super.onStart();
         currentUser = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(authStateListener);
+
     }
 
     @Override
@@ -306,9 +309,9 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                                         public void run() {
                                             pCeleSub.setVisibility(View.INVISIBLE);
                                             Intent i = new Intent(Post_Area.this, Timeline.class);
-                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                             startActivity(i);
                                             finish();
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                         }
                                     }, 4800);
                                 }
@@ -340,7 +343,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     //Upload and retrive data from Firebase>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     private void collectionSetDetails(){
 
-        collectionReference.whereEqualTo("Users" , currentUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collectionReferenceDocs.whereEqualTo("UserId" , currentUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
@@ -354,21 +357,22 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                         CaptureToDoApi captureToDoApi = new CaptureToDoApi();
 
                         captureToDoApi.setFullName(queryDocumentSnapshot.getString("FullName"));
+                        fullName.setText(captureToDoApi.getFullName());
+                        Toast.makeText(captureToDoApi, queryDocumentSnapshot.getString("FullName"), Toast.LENGTH_SHORT).show();
                     }
 
                 }
 
             }
         });
-
     }
 
     //Backbtn Intent function here>>>>>>>>>>>>>>>>>>>>>>>>
     private void backBtnIntent(){
         Intent i = new Intent(Post_Area.this, Timeline.class);
-        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
         startActivity(i);
         finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
 
     }

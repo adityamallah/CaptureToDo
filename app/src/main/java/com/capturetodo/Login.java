@@ -1,8 +1,5 @@
 package com.capturetodo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.airbnb.lottie.LottieAnimationView;
-import com.capturetodo.model.ToDo_Model;
 import com.capturetodo.utils.CaptureToDoApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import javax.annotation.Nullable;
 
 
-public class Login extends AppCompatActivity{
+public class Login extends AppCompatActivity {
 
     // User Email and Password verification Here>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -42,7 +41,7 @@ public class Login extends AppCompatActivity{
     LottieAnimationView animationLoader;
 
     //Text view widgets
-    private TextView dontHaveACC;
+    private TextView dontHaveACC, forgotPassword;
 
     // Edit Text widgets
     private EditText email, password;
@@ -74,8 +73,12 @@ public class Login extends AppCompatActivity{
         //Lottie Animation Loader
         animationLoader = findViewById(R.id.loginLoader);
 
+        //Text view findViewById
         dontHaveACC = findViewById(R.id.loginDontHaveAccount);
         dontHaveAccCLICK();
+
+        forgotPassword = findViewById(R.id.loginForgotPassword);
+        forgotPassOnClick();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,18 +87,33 @@ public class Login extends AppCompatActivity{
             }
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser != null) {
-            Intent i = new Intent(Login.this, Timeline.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
+        if (currentUser != null) {
+            collectionReference.whereEqualTo("UserId", currentUser.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    assert queryDocumentSnapshots != null;
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
+                            captureToDoApi.setFullName(snapshot.getString("FullName"));
+                            captureToDoApi.setUserId(snapshot.getString("UserId"));
+                        }
+
+                    }
+
+                }
+            });
+
+            startActivity(new Intent(getBaseContext(), Timeline.class));
         }
+
     }
 
     @Override
@@ -104,7 +122,18 @@ public class Login extends AppCompatActivity{
 
     }
 
-    private void dontHaveAccCLICK(){
+    private void forgotPassOnClick(){
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Login.this, Forgot_Password.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+    }
+
+    private void dontHaveAccCLICK() {
         dontHaveACC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,37 +146,35 @@ public class Login extends AppCompatActivity{
 
     }
 
-    private void loginBtnClick(){
+    private void loginBtnClick() {
 
 
         String lEmail = email.getText().toString().trim();
         String lPassword = password.getText().toString().trim();
 
-        if(TextUtils.isEmpty(lEmail) || TextUtils.isEmpty(lPassword)){
+        if (TextUtils.isEmpty(lEmail) || TextUtils.isEmpty(lPassword)) {
 
-            if(TextUtils.isEmpty(lEmail)){
+            if (TextUtils.isEmpty(lEmail)) {
                 email.setError("Please enter your email id.");
             }
 
-            if(TextUtils.isEmpty(lPassword)){
+            if (TextUtils.isEmpty(lPassword)) {
                 password.setError("Please enter your password.");
             }
 
             Toast.makeText(this, "Please fill above details.", Toast.LENGTH_LONG).show();
-        }
-        else if (!lEmail.matches(emailPattern) || !lPassword.matches(passwordPattern)){
+        } else if (!lEmail.matches(emailPattern) || !lPassword.matches(passwordPattern)) {
 
-            if(!lEmail.matches(emailPattern)){
+            if (!lEmail.matches(emailPattern)) {
                 email.setError("Please enter valid email id ");
             }
-            if(!lPassword.matches(passwordPattern)){
+            if (!lPassword.matches(passwordPattern)) {
                 password.setError("Please enter valid password");
             }
 
             Toast.makeText(this, "Please check your email and password", Toast.LENGTH_LONG).show();
 
-        }
-        else{
+        } else {
 
             animationLoader.setVisibility(View.VISIBLE);
 
@@ -160,11 +187,10 @@ public class Login extends AppCompatActivity{
 
                     final FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                    if(currentUser != null){
+                    if (currentUser != null) {
                         animationLoader.setVisibility(View.INVISIBLE);
                         Toast.makeText(Login.this, "User not found / Check your email or password", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
                         mAuth.signInWithEmailAndPassword(lEmail, lPassword)
                                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -174,29 +200,31 @@ public class Login extends AppCompatActivity{
                                             Log.d(TAG, "signInWithEmail:success");
                                             final FirebaseUser user = mAuth.getCurrentUser();
 
-                                            final String currentUserId = user.getUid();
+                                            //final String currentUserId = user.getUid();
 
-                                            collectionReference.whereEqualTo("UserId", currentUserId)
-                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                        @Override
-                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                            if(e == null){
+//                                            collectionReference.whereEqualTo("UserId", currentUserId)
+//                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                                                        @Override
+//                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                                                            if (e == null) {
+//
+//                                                            }
+//                                                            assert queryDocumentSnapshots != null;
+//                                                            if (!queryDocumentSnapshots.isEmpty()) {
+//                                                                animationLoader.setVisibility(View.INVISIBLE);
+//                                                                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+//                                                                    CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
+//                                                                    captureToDoApi.setFullName(snapshot.getString("FullName"));
+//                                                                    captureToDoApi.setUserId(snapshot.getString("UserId"));
+//
+//                                                                    updateUI(user);
+//                                                                }
+//
+//                                                            }
+//                                                        }
+//                                                    });
 
-                                                            }
-                                                            assert queryDocumentSnapshots != null;
-                                                            if(!queryDocumentSnapshots.isEmpty()){
-                                                                animationLoader.setVisibility(View.INVISIBLE);
-                                                                for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
-                                                                    CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
-                                                                    captureToDoApi.setFullName(snapshot.getString("FullName"));
-                                                                    captureToDoApi.setUserId(snapshot.getString("UserId"));
-
-                                                                    updateUI(user);
-                                                                }
-
-                                                            }
-                                                        }
-                                                    });
+                                            updateUI(user);
 
                                         } else {
                                             animationLoader.setVisibility(View.INVISIBLE);
@@ -218,20 +246,21 @@ public class Login extends AppCompatActivity{
     }
 
     // Firebase Starting intent after all verification ..........
-    private void updateUI(FirebaseUser firebaseUser){
+    private void updateUI(FirebaseUser firebaseUser) {
 
-        if(firebaseUser != null){
+        if (firebaseUser != null) {
             Intent i = new Intent(Login.this, Timeline.class);
-            animationLoader.setVisibility(View.INVISIBLE);
+            //animationLoader.setVisibility(View.INVISIBLE);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
-        }else{
+        } else {
 
             Toast.makeText(Login.this, "User not found here", Toast.LENGTH_LONG).show();
 
         }
 
     }
+
 
 }

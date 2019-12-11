@@ -193,6 +193,7 @@ public class Register extends AppCompatActivity {
                                 final Map<String, String> userObj = new HashMap<>();
                                 userObj.put("UserId", currentUserId);
                                 userObj.put("FullName", fullName);
+                                userObj.put("EmailId", email);
 
 
                                 //Save data to our firestore
@@ -216,7 +217,7 @@ public class Register extends AppCompatActivity {
                                                     captureToDoApi.setFullName(fullName);
                                                     captureToDoApi.setUserId(currentUserId);
 
-                                                    Intent intent = new Intent(Register.this, Post_Area.class);
+                                                    Intent intent = new Intent(Register.this, Timeline.class);
                                                     intent.putExtra("name", fullName);
                                                     intent.putExtra("email", email);
                                                     intent.putExtra("userId", currentUserId);

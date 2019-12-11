@@ -64,17 +64,17 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
     private void userLogout(){
         mAuth.signOut();
         Intent i = new Intent(Timeline.this, Login.class);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         startActivity(i);
         finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     //Intent to post area from timeline
     private void postAreaIntent(){
         Intent i = new Intent(Timeline.this, Post_Area.class);
-        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
         startActivity(i);
         finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 

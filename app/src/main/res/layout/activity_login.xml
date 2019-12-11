@@ -59,6 +59,19 @@
             app:layout_constraintTop_toBottomOf="@+id/loginEmailId">
         </EditText>
 
+        <TextView
+            android:id="@+id/loginForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="@+id/loginPassword"
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword">
+        </TextView>
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loginLoader"
             android:layout_width="wrap_content"
@@ -72,7 +85,7 @@
             app:layout_constraintBottom_toTopOf="@+id/loginBtn"
             app:layout_constraintEnd_toEndOf="@+id/loginPassword"
             app:layout_constraintStart_toStartOf="@+id/loginPassword"
-            app:layout_constraintTop_toBottomOf="@id/loginPassword"
+            app:layout_constraintTop_toBottomOf="@id/loginForgotPassword"
             app:lottie_autoPlay="true"
             app:lottie_fileName="loader.json"
             app:lottie_loop="true" />
@@ -104,5 +117,6 @@
             app:layout_constraintTop_toBottomOf="@+id/loginBtn"> </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </RelativeLayout>
