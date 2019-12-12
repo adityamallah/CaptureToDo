@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
                             captureToDoApi.setFullName(snapshot.getString("FullName"));
                             captureToDoApi.setUserId(snapshot.getString("UserId"));
                             Intent i = new Intent(Login.this, Timeline.class);
-                            startActivity(i);
+                            startActivity (i);
                             finish();
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }

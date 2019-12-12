@@ -18,7 +18,7 @@
                     android:id="@+id/todoImageView"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="center"
                     android:src="@drawable/coloss"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
