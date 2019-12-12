@@ -104,14 +104,20 @@ public class Login extends AppCompatActivity {
                             CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
                             captureToDoApi.setFullName(snapshot.getString("FullName"));
                             captureToDoApi.setUserId(snapshot.getString("UserId"));
+                            Intent i = new Intent(Login.this, Timeline.class);
+                            startActivity(i);
+                            finish();
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }
-
                     }
-
                 }
             });
 
-            startActivity(new Intent(getBaseContext(), Timeline.class));
+            Intent i = new Intent(Login.this, Timeline.class);
+            startActivity(i);
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
 
     }
@@ -200,29 +206,29 @@ public class Login extends AppCompatActivity {
                                             Log.d(TAG, "signInWithEmail:success");
                                             final FirebaseUser user = mAuth.getCurrentUser();
 
-                                            //final String currentUserId = user.getUid();
+                                            String currentUserId = user.getUid();
 
-//                                            collectionReference.whereEqualTo("UserId", currentUserId)
-//                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                                                        @Override
-//                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                                                            if (e == null) {
-//
-//                                                            }
-//                                                            assert queryDocumentSnapshots != null;
-//                                                            if (!queryDocumentSnapshots.isEmpty()) {
-//                                                                animationLoader.setVisibility(View.INVISIBLE);
-//                                                                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-//                                                                    CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
-//                                                                    captureToDoApi.setFullName(snapshot.getString("FullName"));
-//                                                                    captureToDoApi.setUserId(snapshot.getString("UserId"));
-//
-//                                                                    updateUI(user);
-//                                                                }
-//
-//                                                            }
-//                                                        }
-//                                                    });
+                                            collectionReference.whereEqualTo("UserId", currentUserId)
+                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                            if (e == null) {
+
+                                                            }
+                                                            assert queryDocumentSnapshots != null;
+                                                            if (!queryDocumentSnapshots.isEmpty()) {
+                                                                animationLoader.setVisibility(View.INVISIBLE);
+                                                                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                                    CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
+                                                                    captureToDoApi.setFullName(snapshot.getString("FullName"));
+                                                                    captureToDoApi.setUserId(snapshot.getString("UserId"));
+
+                                                                    updateUI(user);
+                                                                }
+
+                                                            }
+                                                        }
+                                                    });
 
                                             updateUI(user);
 

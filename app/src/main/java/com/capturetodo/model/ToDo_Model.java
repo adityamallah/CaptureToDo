@@ -1,6 +1,5 @@
 package com.capturetodo.model;
-
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
 
 public class ToDo_Model {
     private String title;

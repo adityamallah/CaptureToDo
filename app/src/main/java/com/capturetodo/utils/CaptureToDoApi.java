@@ -7,6 +7,7 @@ public class CaptureToDoApi extends Application {
     private String fullName;
     private String emailId;
     private String userId;
+    private String docPath;
     private static CaptureToDoApi captureToDoApi;
 
     public static CaptureToDoApi getCaptureToDoApi() {
@@ -42,5 +43,13 @@ public class CaptureToDoApi extends Application {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDocPath() {
+        return docPath;
+    }
+
+    public void setDocPath(String docPath) {
+        this.docPath = docPath;
     }
 }

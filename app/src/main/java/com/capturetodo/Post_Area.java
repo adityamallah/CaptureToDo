@@ -279,7 +279,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
 
             fiePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
 
 
                     fiePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -287,6 +287,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                         public void onSuccess(Uri uri) {
 
                             String imageUrls = uri.toString();
+                            Timestamp timeStamp = Timestamp.now();
+
 
                             //Saving data in objects
                             final ToDo_Model toDoModel = new ToDo_Model();
@@ -296,6 +298,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                             toDoModel.setFullName(uFullname);
                             toDoModel.setDocPath(docPathUU);
                             toDoModel.setEmailId(uEmailId);
+                            toDoModel.setTimestamp(timeStamp);
+                            toDoModel.setUserId(currentUser.getUid());
 
                             //Collection reference with Document reference revoke here
                             dr.set(toDoModel).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -322,6 +326,34 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                                     Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
                                 }
                             });
+
+//                            collectionReference.add(toDoModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                @Override
+//                                public void onSuccess(DocumentReference documentReference) {
+//
+//                                    pLoader.setVisibility(View.INVISIBLE);
+//                                    pCeleSub.setVisibility(View.VISIBLE);
+//                                    boolean handler = new Handler().postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            pCeleSub.setVisibility(View.INVISIBLE);
+//                                            Intent i = new Intent(Post_Area.this, Timeline.class);
+//                                            startActivity(i);
+//                                            finish();
+//                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                        }
+//                                    }, 4800);
+//
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//
+//                                    pLoader.setVisibility(View.INVISIBLE);
+//                                    Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
+//
+//                                }
+//                            });
 
                         }
                     });

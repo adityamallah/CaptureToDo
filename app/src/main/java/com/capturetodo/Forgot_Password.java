@@ -68,7 +68,7 @@ public class Forgot_Password extends AppCompatActivity {
     }
 
     private void submitOnClicks(){
-        
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,6 @@ public class Forgot_Password extends AppCompatActivity {
                     semail.setError("Please enter your email id");
                     Toast.makeText(Forgot_Password.this, "Please enter your email id", Toast.LENGTH_LONG).show();
                 }else {
-
                     animationView.setVisibility(View.VISIBLE);
                     boolean handler = new Handler().postDelayed(new Runnable() {
                         @Override

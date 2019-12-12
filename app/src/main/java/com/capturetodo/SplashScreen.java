@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import android.widget.TextView;
+
 public class SplashScreen extends AppCompatActivity {
 
     private TextView logo;
     private int splashScreenTime = 4000;
+
 
 
 
@@ -33,6 +35,7 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+
             }
         }, splashScreenTime);
 
