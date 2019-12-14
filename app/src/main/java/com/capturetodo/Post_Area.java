@@ -51,7 +51,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
 
     private static final int GALLERY_CODE = 1 ;
     //Edit Text Widgets
-    private EditText title, description;
+    private EditText title, description, tDays, tHours, tMinutes;
 
     //Image View Widgets
     private ImageView camera, upload, done, backImg, backBtn;
@@ -87,6 +87,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     private Uri imageUri;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,8 +113,13 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         backBtn = findViewById(R.id.timelineBack);
         backBtn.setOnClickListener(this);
 
+        tDays = findViewById(R.id.postTimerDay);
+        tHours = findViewById(R.id.postTimerHours);
+        tMinutes = findViewById(R.id.postTimerMinutes);
+
         pLoader = findViewById(R.id.postLoader);
         pCeleSub = findViewById(R.id.postRibbonOnSub);
+
 
         if(CaptureToDoApi.getCaptureToDoApi() != null ){
             uFullname = CaptureToDoApi.getCaptureToDoApi().getFullName();
@@ -250,10 +257,18 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
 
         final String sTitle = title.getText().toString().trim();
         final String sDescription = description.getText().toString().trim();
+        final String sTDays = tDays.getText().toString().trim();
+        final String sTHours = tHours.getText().toString().trim();
+        final String sTMinutes = tMinutes.getText().toString().trim();
 
-        if(TextUtils.isEmpty(sTitle) && TextUtils.isEmpty(sDescription)){
+
+        if(TextUtils.isEmpty(sTitle) && TextUtils.isEmpty(sDescription) && TextUtils.isEmpty(sTDays)
+            && TextUtils.isEmpty(sTHours) && TextUtils.isEmpty(sTMinutes)){
             title.setError("Please enter your title here");
             description.setError("Please enter your description here");
+            tDays.setError("Please set day");
+            tHours.setError("Please set hour");
+            tMinutes.setError("Please set minutes");
             Toast.makeText(this, "Please enter you TODO", Toast.LENGTH_SHORT).show();
             return;
 
@@ -268,6 +283,36 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             description.setError("Please enter your description here");
             Toast.makeText(this,
                     "Please enter your description.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TextUtils.isEmpty(sTDays)){
+            tDays.setError("Please set day");
+            Toast.makeText(this, "Please set day", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(sTHours)){
+            tHours.setError("Please set hour");
+            Toast.makeText(this, "Please set hour", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(sTMinutes)){
+            tMinutes.setError("Please set minute");
+            Toast.makeText(this, "Please set minute", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(Integer.parseInt(sTDays) > 30){
+            tDays.setError("Days should not be more then 30");
+            Toast.makeText(this, "Days should not be more then 30", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(Integer.parseInt(sTHours) > 24){
+            tHours.setError("Hours should not be more then 24");
+            Toast.makeText(this, "Hours should not be more then 24", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(Integer.parseInt(sTMinutes) > 60){
+            tMinutes.setError("Minutes should not be more then 60");
+            Toast.makeText(Post_Area.this, "Minutes should not be more then 60", Toast.LENGTH_SHORT).show();
         }
         else {
             pLoader.setVisibility(View.VISIBLE);
@@ -300,6 +345,9 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                             toDoModel.setEmailId(uEmailId);
                             toDoModel.setTimestamp(timeStamp);
                             toDoModel.setUserId(currentUser.getUid());
+                            toDoModel.setTimerDays(sTDays);
+                            toDoModel.setTimerHours(sTHours);
+                            toDoModel.setTimerMinutes(sTMinutes);
 
                             //Collection reference with Document reference revoke here
                             dr.set(toDoModel).addOnSuccessListener(new OnSuccessListener<Void>() {

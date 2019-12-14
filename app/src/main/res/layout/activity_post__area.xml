@@ -36,7 +36,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/coloss"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,9 +94,9 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="2dp"
-                    android:maxLength="30"
                     android:background="@drawable/post_area_edittext"
-                    android:hint="Title"
+                    android:hint="Work Title"
+                    android:maxLength="30"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     app:layout_constraintEnd_toEndOf="@+id/postDateTV"
@@ -110,9 +110,9 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="2dp"
-                    android:maxLength="155"
                     android:background="@drawable/post_area_edittext"
                     android:hint="Description"
+                    android:maxLength="155"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     app:layout_constraintBottom_toTopOf="@+id/postDone"
@@ -130,25 +130,101 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="ContentDescription" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Timer Here"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/postDone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/postDescription">
-                </TextView>
-
                 <ImageView
                     android:id="@+id/timelineBack"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:rotation="180"
                     android:src="@drawable/ic_chevron_left_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Set Timer"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/postDone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/postDescription" />
+
+                <EditText
+                    android:id="@+id/postTimerDay"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext_background"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColorHint="@color/colorWhite"
+                    android:hint="Days"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/colorWhite"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
+
+                <EditText
+                    android:id="@+id/postTimerHours"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext_background"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColorHint="@color/colorWhite"
+                    android:hint="Hrs"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/colorWhite"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/postTimerDay"
+                    app:layout_constraintStart_toEndOf="@+id/postTimerDay"
+                    app:layout_constraintTop_toTopOf="@+id/postTimerDay" />
+
+                <EditText
+                    android:id="@+id/postTimerMinutes"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext_background"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColorHint="@color/colorWhite"
+                    android:hint="Mins"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/colorWhite"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/postTimerHours"
+                    app:layout_constraintStart_toEndOf="@+id/postTimerHours"
+                    app:layout_constraintTop_toTopOf="@+id/postTimerHours" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/postRibbonOnSub"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:scaleX="1"
+                    android:scaleY="1"
+                    android:visibility="invisible"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="ribbon.json"
+                    app:lottie_loop="true"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -187,18 +263,5 @@
             app:layout_constraintStart_toStartOf="@+id/cardView">
         </Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/postRibbonOnSub"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:visibility="invisible"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="ribbon.json"
-        app:lottie_loop="true">
-    </com.airbnb.lottie.LottieAnimationView>
 
 </RelativeLayout>

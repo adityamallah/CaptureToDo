@@ -11,101 +11,167 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
->
+        android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/todoImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="center"
-                    android:src="@drawable/coloss"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:id="@+id/todoRowRel"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/todoUserNameTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="User Name Here"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/todoImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/todoImageView" />
+            <ImageView
+                android:id="@+id/todoImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@drawable/coloss" />
 
-                <TextView
-                    android:id="@+id/todoDateTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="Today"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp"
-                    android:textStyle="normal"
-                    app:layout_constraintBottom_toBottomOf="@+id/todoUserNameTV"
-                    app:layout_constraintEnd_toEndOf="@+id/todoImageView"
-                    app:layout_constraintStart_toEndOf="@+id/todoUserNameTV"
-                    app:layout_constraintTop_toTopOf="@+id/todoUserNameTV" />
+        </RelativeLayout>
 
-                <EditText
-                    android:id="@+id/todoTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="2dp"
-                    android:maxLength="30"
-                    android:background="@drawable/post_area_edittext"
-                    android:hint="Title"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    app:layout_constraintEnd_toEndOf="@+id/todoDateTV"
-                    app:layout_constraintStart_toStartOf="@+id/todoUserNameTV"
-                    app:layout_constraintTop_toBottomOf="@+id/todoUserNameTV" />
 
-                <EditText
-                    android:id="@+id/todoDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="2dp"
-                    android:maxLength="155"
-                    android:background="@drawable/post_area_edittext"
-                    android:hint="Description"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/todoDone"
-                    app:layout_constraintEnd_toEndOf="@+id/todoTitle"
-                    app:layout_constraintStart_toStartOf="@+id/todoTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/todoTitle" />
+        <TextView
+            android:id="@+id/todoUserNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="User Name Here"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/todoRowRel"
+            app:layout_constraintTop_toBottomOf="@+id/todoRowRel" />
 
-                <ImageView
-                    android:id="@+id/todoDone"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_done_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/todoDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="Today"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/todoUserNameTV"
+            app:layout_constraintEnd_toEndOf="@+id/todoRowRel"
+            app:layout_constraintStart_toEndOf="@+id/todoUserNameTV"
+            app:layout_constraintTop_toTopOf="@+id/todoUserNameTV" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Timer Here"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/todoDone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/todoDescription">
-                </TextView>
+        <TextView
+            android:id="@+id/todoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/post_area_edittext"
+            android:hint="Title"
+            android:maxLength="30"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/todoDateTV"
+            app:layout_constraintStart_toStartOf="@+id/todoUserNameTV"
+            app:layout_constraintTop_toBottomOf="@+id/todoUserNameTV" />
+
+        <TextView
+            android:id="@+id/todoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginStart="2dp"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/post_area_edittext"
+            android:hint="Description"
+            android:maxLength="200"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/todoDone"
+            app:layout_constraintEnd_toEndOf="@+id/todoTitle"
+            app:layout_constraintStart_toStartOf="@+id/todoTitle"
+            app:layout_constraintTop_toBottomOf="@+id/todoTitle" />
+
+        <ImageView
+            android:id="@+id/todoDone"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_done_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todoCardDAY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/todoDone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/todoDone"
+            android:layout_marginStart="50dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            >
+
+            <TextView
+                android:id="@+id/todoTimerDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Days 24"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todoCardHOURS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/todoCardDAY"
+            app:layout_constraintStart_toEndOf="@+id/todoCardDAY"
+            app:layout_constraintTop_toTopOf="@+id/todoCardDAY"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                android:id="@+id/todoTimerHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:padding="5dp"
+                android:text="Hours 2"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todoCardMINUTES"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/todoCardHOURS"
+            app:layout_constraintStart_toEndOf="@+id/todoCardHOURS"
+            app:layout_constraintTop_toTopOf="@+id/todoCardHOURS"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                android:id="@+id/todoTimerMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:padding="5dp"
+                android:text="Minutes 50"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

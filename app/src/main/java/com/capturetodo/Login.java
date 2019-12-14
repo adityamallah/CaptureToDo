@@ -113,10 +113,10 @@ public class Login extends AppCompatActivity {
                 }
             });
 
-            Intent i = new Intent(Login.this, Timeline.class);
-            startActivity(i);
-            finish();
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            Intent i = new Intent(Login.this, Timeline.class);
+//            startActivity(i);
+//            finish();
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
         }
 
@@ -154,7 +154,7 @@ public class Login extends AppCompatActivity {
 
     private void loginBtnClick() {
 
-
+        loginBtn.setEnabled(false);
         String lEmail = email.getText().toString().trim();
         String lPassword = password.getText().toString().trim();
 
@@ -162,10 +162,12 @@ public class Login extends AppCompatActivity {
 
             if (TextUtils.isEmpty(lEmail)) {
                 email.setError("Please enter your email id.");
+                loginBtn.setEnabled(true);
             }
 
             if (TextUtils.isEmpty(lPassword)) {
                 password.setError("Please enter your password.");
+                loginBtn.setEnabled(true);
             }
 
             Toast.makeText(this, "Please fill above details.", Toast.LENGTH_LONG).show();
@@ -173,12 +175,15 @@ public class Login extends AppCompatActivity {
 
             if (!lEmail.matches(emailPattern)) {
                 email.setError("Please enter valid email id ");
+                loginBtn.setEnabled(true);
             }
             if (!lPassword.matches(passwordPattern)) {
                 password.setError("Please enter valid password");
+                loginBtn.setEnabled(true);
             }
 
             Toast.makeText(this, "Please check your email and password", Toast.LENGTH_LONG).show();
+            loginBtn.setEnabled(true);
 
         } else {
 
@@ -229,8 +234,6 @@ public class Login extends AppCompatActivity {
                                                             }
                                                         }
                                                     });
-
-                                            updateUI(user);
 
                                         } else {
                                             animationLoader.setVisibility(View.INVISIBLE);

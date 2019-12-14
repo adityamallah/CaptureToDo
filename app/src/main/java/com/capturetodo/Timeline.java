@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.capturetodo.adapter.TodoList_Adapter;
@@ -30,6 +31,9 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
     //ImageView widgets
     private ImageView addPost, logOut;
+
+    //TextView widgets
+    private TextView newUserView;
 
     //Firebase widgets
     private FirebaseAuth mAuth;
@@ -54,6 +58,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         addPost.setOnClickListener(this);
         logOut = findViewById(R.id.timelineLogout);
         logOut.setOnClickListener(this);
+        newUserView = findViewById(R.id.timeLineNewUserText);
 
         toDo_models = new ArrayList<>();
 
@@ -61,8 +66,21 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Timeline.this));
 
-        recyclerDataInput();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recyclerDataInput();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //adapter.notifyDataSetChanged();
+        toDo_models.clear();
     }
 
     @Override
@@ -98,6 +116,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void recyclerDataInput(){
+
         collectionReference.whereEqualTo("userId", CaptureToDoApi.getCaptureToDoApi()
                 .getUserId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -107,12 +126,17 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
                     for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                         ToDo_Model toDo_model = queryDocumentSnapshot.toObject(ToDo_Model.class);
                         toDo_models.add(toDo_model);
+
                     }
 
                     adapter = new TodoList_Adapter(Timeline.this, toDo_models);
 
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
+
+                }else{
+                    newUserView.setVisibility(View.VISIBLE);
                 }
 
             }

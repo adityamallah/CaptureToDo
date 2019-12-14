@@ -10,12 +10,16 @@ public class ToDo_Model {
     private String fullName;
     private String docPath;
     private String emailId;
+    private String timerDays;
+    private String timerHours;
+    private String timerMinutes;
 
     public ToDo_Model() {
     }
 
     public ToDo_Model(String title, String description, String imgUrl, String userId,
-                      Timestamp timestamp, String fullName, String docPath, String emailId) {
+                      Timestamp timestamp, String fullName, String docPath, String emailId,
+                      String timerDays, String timerHours, String timerMinutes) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -24,6 +28,9 @@ public class ToDo_Model {
         this.fullName = fullName;
         this.docPath = docPath;
         this.emailId = emailId;
+        this.timerDays = timerDays;
+        this.timerHours = timerHours;
+        this.timerMinutes = timerMinutes;
     }
 
     public String getTitle() {
@@ -88,5 +95,29 @@ public class ToDo_Model {
 
     public void setEmailId(String emailId) {
         this.emailId = emailId;
+    }
+
+    public String getTimerDays() {
+        return timerDays;
+    }
+
+    public void setTimerDays(String timerDays) {
+        this.timerDays = timerDays;
+    }
+
+    public String getTimerHours() {
+        return timerHours;
+    }
+
+    public void setTimerHours(String timerHours) {
+        this.timerHours = timerHours;
+    }
+
+    public String getTimerMinutes() {
+        return timerMinutes;
+    }
+
+    public void setTimerMinutes(String timerMinutes) {
+        this.timerMinutes = timerMinutes;
     }
 }
