@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="2dp">
+        android:layout_marginTop="2dp">
 
         <TextView
             android:id="@+id/timelineLogo"
@@ -50,17 +50,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timelineLogo"
-            app:cardBackgroundColor="#00FFFFFF"
+            app:cardBackgroundColor="@color/colorWhite"
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/timelineRecyclerView"

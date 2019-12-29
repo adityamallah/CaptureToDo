@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "798713585317-59tqm218ftt3nng2v6ks8ikt6vvep3eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capturetodo",
+            "certificate_hash": "fb53fbc4d6a4c8b5169187125ad9b21df72bda9f"
+          }
+        },
+        {
           "client_id": "798713585317-t9s2qvuppsvc5uqtndpgre9i3pt52n2i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

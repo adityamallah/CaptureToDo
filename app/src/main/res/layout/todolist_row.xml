@@ -17,6 +17,7 @@
             android:id="@+id/todoRowRel"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,69 +34,204 @@
 
         </RelativeLayout>
 
-
-        <TextView
-            android:id="@+id/todoUserNameTV"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/todoLinearBG"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="User Name Here"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/todoRowRel"
-            app:layout_constraintTop_toBottomOf="@+id/todoRowRel" />
+            app:layout_constraintTop_toBottomOf="@+id/todoRowRel"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent">
 
-        <TextView
-            android:id="@+id/todoDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="Today"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/todoUserNameTV"
-            app:layout_constraintEnd_toEndOf="@+id/todoRowRel"
-            app:layout_constraintStart_toEndOf="@+id/todoUserNameTV"
-            app:layout_constraintTop_toTopOf="@+id/todoUserNameTV" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp">
+
+                <TextView
+                    android:id="@+id/todoUserNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="User Name Here"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/todoDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity=""
+                    android:text="Today"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/todoTitle"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="50dp"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:textStyle="bold"
-            android:textSize="15dp"
+            android:backgroundTint="@color/colorOffWhite"
+            android:gravity="center"
+            android:textSize="20dp"
             android:layout_marginEnd="2dp"
             android:background="@drawable/post_area_edittext"
             android:hint="Title"
             android:maxLength="30"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/todoDateTV"
-            app:layout_constraintStart_toStartOf="@+id/todoUserNameTV"
-            app:layout_constraintTop_toBottomOf="@+id/todoUserNameTV" />
+            app:layout_constraintEnd_toEndOf="@+id/todoLinearBG"
+            app:layout_constraintStart_toStartOf="@+id/todoLinearBG"
+            app:layout_constraintTop_toBottomOf="@+id/todoLinearBG" />
 
         <TextView
             android:id="@+id/todoDescription"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="100dp"
             android:layout_marginStart="2dp"
             android:textSize="15dp"
+            android:backgroundTint="@color/colorOffWhite"
+            android:gravity="center"
+            android:padding="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginEnd="2dp"
             android:background="@drawable/post_area_edittext"
             android:hint="Description"
             android:maxLength="200"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/todoDone"
+            app:layout_constraintBottom_toTopOf="@+id/todoReamingBG"
             app:layout_constraintEnd_toEndOf="@+id/todoTitle"
             app:layout_constraintStart_toStartOf="@+id/todoTitle"
             app:layout_constraintTop_toBottomOf="@+id/todoTitle" />
+
+        <LinearLayout
+            android:id="@+id/todoReamingBG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/todoReamingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining Time :"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/todoCardDAY"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/colorWhite"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/todoReamingTime"
+                    app:layout_constraintStart_toEndOf="@+id/todoReamingTime"
+                    app:layout_constraintTop_toTopOf="@+id/todoReamingTime" >
+
+                    <TextView
+                        android:id="@+id/todoTimerDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:text="Days 24"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent" />
+
+                </androidx.cardview.widget.CardView>
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/todoCardHOURS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="0dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/todoCardDAY"
+                    app:layout_constraintStart_toEndOf="@+id/todoCardDAY"
+                    app:layout_constraintTop_toTopOf="@+id/todoCardDAY">
+
+                    <TextView
+                        android:id="@+id/todoTimerHours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Hours 2"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/todoCardMINUTES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="@color/colorWhite"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/todoCardHOURS"
+                    app:layout_constraintStart_toEndOf="@+id/todoCardHOURS"
+                    app:layout_constraintTop_toTopOf="@+id/todoCardHOURS">
+
+                    <TextView
+                        android:id="@+id/todoTimerMinutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Minutes 50"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/todoDone"
@@ -103,75 +239,13 @@
             android:layout_height="35dp"
             android:layout_margin="5dp"
             android:src="@drawable/ic_done_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todoCardDAY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/todoDone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/todoDone"
-            android:layout_marginStart="50dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dp"
-            >
 
-            <TextView
-                android:id="@+id/todoTimerDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Days 24"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todoCardHOURS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/todoCardDAY"
-            app:layout_constraintStart_toEndOf="@+id/todoCardDAY"
-            app:layout_constraintTop_toTopOf="@+id/todoCardDAY"
-            android:layout_marginStart="10dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                android:id="@+id/todoTimerHours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:padding="5dp"
-                android:text="Hours 2"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todoCardMINUTES"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/todoCardHOURS"
-            app:layout_constraintStart_toEndOf="@+id/todoCardHOURS"
-            app:layout_constraintTop_toTopOf="@+id/todoCardHOURS"
-            android:layout_marginStart="10dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                android:id="@+id/todoTimerMinutes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:padding="5dp"
-                android:text="Minutes 50"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
-        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
