@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Timeline extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,7 +69,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         recyclerView.setLayoutManager(new LinearLayoutManager(Timeline.this));
 
 
-
     }
 
     @Override
@@ -99,7 +100,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
     }
 
     //User Logout Function
-    private void userLogout(){
+    private void userLogout() {
         mAuth.signOut();
         Intent i = new Intent(Timeline.this, Login.class);
         startActivity(i);
@@ -108,22 +109,22 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
     }
 
     //Intent to post area from timeline
-    private void postAreaIntent(){
+    private void postAreaIntent() {
         Intent i = new Intent(Timeline.this, Post_Area.class);
         startActivity(i);
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
-    private void recyclerDataInput(){
+    private void recyclerDataInput() {
 
         collectionReference.whereEqualTo("userId", CaptureToDoApi.getCaptureToDoApi()
                 .getUserId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                if(!queryDocumentSnapshots.isEmpty()){
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                         ToDo_Model toDo_model = queryDocumentSnapshot.toObject(ToDo_Model.class);
                         toDo_models.add(toDo_model);
 
@@ -135,7 +136,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
                     adapter.notifyDataSetChanged();
 
 
-                }else{
+                } else {
                     newUserView.setVisibility(View.VISIBLE);
                 }
 
@@ -149,6 +150,5 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
             }
         });
     }
-
 
 }

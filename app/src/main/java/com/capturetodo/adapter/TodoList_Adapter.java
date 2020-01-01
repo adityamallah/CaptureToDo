@@ -99,7 +99,6 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
                 holder.minutes.setText("Minutes " +(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)))+"");
 
-                //seconds.setText((TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))+"");
             }
 
             @Override
@@ -109,7 +108,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
                 holder.days.setText("Days 0");
                 holder.hours.setText("Hours 0");
-                holder.minutes.setText("");
+                holder.minutes.setText("Minutes 0");
             }
         }.start();
 
