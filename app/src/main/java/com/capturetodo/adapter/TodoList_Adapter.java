@@ -2,6 +2,7 @@ package com.capturetodo.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -76,7 +77,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         holder.todoDescription.setText(toDo_model.getDescription());
         holder.name.setText(toDo_model.getFullName());
 
-        //holder.days.setText("Days " + toDo_model.getTimerDays());
+        holder.days.setText("Days " + toDo_model.getTimerDays());
         holder.hours.setText("Hours " + toDo_model.getTimerHours());
         holder.minutes.setText("Minutes " + toDo_model.getTimerMinutes());
 
@@ -85,6 +86,8 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         Long minutesNumber = Long.parseLong(toDo_model.getTimerMinutes()) * 60000;
 
         Long addedData = daysNumber + (hoursNumber + minutesNumber);
+        Log.d("TIIME", "onBindViewHolder: " + addedData.toString());
+
 
         new CountDownTimer(addedData, 1000){
 
@@ -101,8 +104,8 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
             }
 
-            @Override
 
+            @Override
             public void onFinish() {
                 /*            clearing all fields and displaying countdown finished message             */
 
@@ -110,7 +113,9 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
                 holder.hours.setText("Hours 0");
                 holder.minutes.setText("Minutes 0");
             }
+
         }.start();
+
 
 
         imageUrl = toDo_model.getImgUrl();

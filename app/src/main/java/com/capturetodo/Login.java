@@ -94,31 +94,26 @@ public class Login extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (currentUser != null) {
-            collectionReference.whereEqualTo("UserId", currentUser.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    assert queryDocumentSnapshots != null;
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                            CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
-                            captureToDoApi.setFullName(snapshot.getString("FullName"));
-                            captureToDoApi.setUserId(snapshot.getString("UserId"));
-                            Intent i = new Intent(Login.this, Timeline.class);
-                            startActivity (i);
-                            finish();
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        }
-                    }
-                }
-            });
-
-//            Intent i = new Intent(Login.this, Timeline.class);
-//            startActivity(i);
-//            finish();
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-        }
+//        if (currentUser != null) {
+//            collectionReference.whereEqualTo("UserId", currentUser.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                @Override
+//                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                    assert queryDocumentSnapshots != null;
+//                    if (!queryDocumentSnapshots.isEmpty()) {
+//                        for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+//                            CaptureToDoApi captureToDoApi = CaptureToDoApi.getCaptureToDoApi();
+//                            captureToDoApi.setFullName(snapshot.getString("FullName"));
+//                            captureToDoApi.setUserId(snapshot.getString("UserId"));
+//                            Intent i = new Intent(Login.this, Timeline.class);
+//                            startActivity (i);
+//                            finish();
+//                        }
+//                    }
+//                }
+//            });
+//
+//
+//        }
 
     }
 

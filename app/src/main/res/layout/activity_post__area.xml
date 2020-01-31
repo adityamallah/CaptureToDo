@@ -115,20 +115,19 @@
                     android:maxLength="155"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/postDone"
                     app:layout_constraintEnd_toEndOf="@+id/postTitle"
                     app:layout_constraintStart_toStartOf="@+id/postTitle"
                     app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
-                <ImageView
-                    android:id="@+id/postDone"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_done_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="ContentDescription" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/postDone"-->
+<!--                    android:layout_width="35dp"-->
+<!--                    android:layout_height="35dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:src="@drawable/ic_done_black_24dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    tools:ignore="ContentDescription" />-->
 
                 <ImageView
                     android:id="@+id/timelineBack"
@@ -148,7 +147,7 @@
                     android:text="Set Timer"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/postDone"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/postDescription" />
 
@@ -212,19 +211,19 @@
                     app:layout_constraintStart_toEndOf="@+id/postTimerHours"
                     app:layout_constraintTop_toTopOf="@+id/postTimerHours" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/postRibbonOnSub"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:scaleX="1"
-                    android:scaleY="1"
-                    android:visibility="invisible"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="ribbon.json"
-                    app:lottie_loop="true"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="0dp" />
+<!--                <com.airbnb.lottie.LottieAnimationView-->
+<!--                    android:id="@+id/postRibbonOnSub"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:scaleX="1"-->
+<!--                    android:scaleY="1"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:lottie_autoPlay="true"-->
+<!--                    app:lottie_fileName="ribbon.json"-->
+<!--                    app:lottie_loop="true"-->
+<!--                    tools:layout_editor_absoluteX="0dp"-->
+<!--                    tools:layout_editor_absoluteY="0dp" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

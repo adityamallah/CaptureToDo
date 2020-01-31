@@ -5,8 +5,8 @@
     android:id="@+id/todoListCardViewMain"
     android:layout_width="match_parent"
     android:layout_height="550dp"
-    android:layout_marginTop="15dp"
-    app:cardCornerRadius="15dp">
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="8dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

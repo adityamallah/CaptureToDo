@@ -104,7 +104,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         camera.setOnClickListener(this);
         upload = findViewById(R.id.postUploadIcon);
         upload.setOnClickListener(this);
-        done = findViewById(R.id.postDone);
+        //done = findViewById(R.id.postDone);
         backImg = findViewById(R.id.postImageView);
         fullName = findViewById(R.id.postUserNameTV);
         date = findViewById(R.id.postDateTV);
@@ -118,7 +118,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         tMinutes = findViewById(R.id.postTimerMinutes);
 
         pLoader = findViewById(R.id.postLoader);
-        pCeleSub = findViewById(R.id.postRibbonOnSub);
+        //pCeleSub = findViewById(R.id.postRibbonOnSub);
 
 
         if(CaptureToDoApi.getCaptureToDoApi() != null ){
@@ -355,17 +355,10 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                                 public void onSuccess(Void aVoid) {
 
                                     pLoader.setVisibility(View.INVISIBLE);
-                                    pCeleSub.setVisibility(View.VISIBLE);
-                                    boolean handler = new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            pCeleSub.setVisibility(View.INVISIBLE);
-                                            Intent i = new Intent(Post_Area.this, Timeline.class);
-                                            startActivity(i);
-                                            finish();
-                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                        }
-                                    }, 4800);
+                                    Intent i = new Intent(Post_Area.this, Timeline.class);
+                                    startActivity(i);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -380,17 +373,10 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
 //                                public void onSuccess(DocumentReference documentReference) {
 //
 //                                    pLoader.setVisibility(View.INVISIBLE);
-//                                    pCeleSub.setVisibility(View.VISIBLE);
-//                                    boolean handler = new Handler().postDelayed(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            pCeleSub.setVisibility(View.INVISIBLE);
-//                                            Intent i = new Intent(Post_Area.this, Timeline.class);
-//                                            startActivity(i);
-//                                            finish();
-//                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                                        }
-//                                    }, 4800);
+//                                    Intent i = new Intent(Post_Area.this, Timeline.class);
+//                                    startActivity(i);
+//                                    finish();
+//                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //
 //                                }
 //                            }).addOnFailureListener(new OnFailureListener() {

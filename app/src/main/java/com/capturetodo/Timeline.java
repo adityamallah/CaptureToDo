@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,20 +69,21 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Timeline.this));
 
+        recyclerDataInput();
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        recyclerDataInput();
+        //recyclerDataInput();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //adapter.notifyDataSetChanged();
-        toDo_models.clear();
+        //toDo_models.clear();
     }
 
     @Override
@@ -130,6 +132,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
                     }
 
+
+                    Log.d("HOLO", "onCreate: " + toDo_models.get(0).getTimerDays());
                     adapter = new TodoList_Adapter(Timeline.this, toDo_models);
 
                     recyclerView.setAdapter(adapter);
@@ -149,6 +153,16 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
             }
         });
+    }
+
+    private void timerFun (){
+        Intent i = getIntent();
+
+        Bundle bundle = i.getExtras();
+
+        ToDo_Model toDoModel = new ToDo_Model();
+
+
     }
 
 }
