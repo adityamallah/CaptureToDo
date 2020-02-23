@@ -368,27 +368,6 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                                 }
                             });
 
-//                            collectionReference.add(toDoModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                @Override
-//                                public void onSuccess(DocumentReference documentReference) {
-//
-//                                    pLoader.setVisibility(View.INVISIBLE);
-//                                    Intent i = new Intent(Post_Area.this, Timeline.class);
-//                                    startActivity(i);
-//                                    finish();
-//                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//
-//                                    pLoader.setVisibility(View.INVISIBLE);
-//                                    Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
-//
-//                                }
-//                            });
-
                         }
                     });
                 }

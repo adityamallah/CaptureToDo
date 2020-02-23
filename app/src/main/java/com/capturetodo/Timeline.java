@@ -64,10 +64,12 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         newUserView = findViewById(R.id.timeLineNewUserText);
 
         toDo_models = new ArrayList<>();
-
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Timeline.this);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView = findViewById(R.id.timelineRecyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Timeline.this));
+        recyclerView.setLayoutManager(linearLayoutManager);
+
 
         recyclerDataInput();
 
@@ -120,6 +122,10 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
     private void recyclerDataInput() {
 
+        if(toDo_models.size() != 0){
+            return;
+        }
+
         collectionReference.whereEqualTo("userId", CaptureToDoApi.getCaptureToDoApi()
                 .getUserId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -132,11 +138,11 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
                     }
 
-
                     Log.d("HOLO", "onCreate: " + toDo_models.get(0).getTimerDays());
                     adapter = new TodoList_Adapter(Timeline.this, toDo_models);
 
                     recyclerView.setAdapter(adapter);
+                    recyclerView.scrollToPosition(toDo_models.size() - 1 );
                     adapter.notifyDataSetChanged();
 
 
