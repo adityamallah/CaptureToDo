@@ -71,6 +71,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
+
         recyclerDataInput();
 
     }
@@ -161,14 +162,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-    private void timerFun (){
-        Intent i = getIntent();
 
-        Bundle bundle = i.getExtras();
-
-        ToDo_Model toDoModel = new ToDo_Model();
-
-
-    }
 
 }
