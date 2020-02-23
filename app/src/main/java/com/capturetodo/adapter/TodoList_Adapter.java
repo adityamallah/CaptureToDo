@@ -1,6 +1,8 @@
 package com.capturetodo.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -18,34 +20,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capturetodo.R;
 import com.capturetodo.model.ToDo_Model;
+import com.capturetodo.notification.AlertReciver;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
 
 public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.ViewHolder> {
 
     private Context context;
     private List<ToDo_Model> toDo_models;
     private String imagePathRemove = null;
+
+
+
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -76,7 +74,6 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         String imageUrl;
 
 
-
         holder.todoTitle.setText(toDo_model.getTitle());
         holder.todoDescription.setText(toDo_model.getDescription());
         holder.name.setText(toDo_model.getFullName());
@@ -91,29 +88,32 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
         Long addedData = daysNumber + (hoursNumber + minutesNumber);
 
+
+
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
         try {
-            Date main =  formatter.parse(toDo_model.getMainTimer());
+            Date main = formatter.parse(toDo_model.getMainTimer());
 
             assert main != null;
-            long mainMillis =  main.getTime() - System.currentTimeMillis();
+            long mainMillis = main.getTime() - System.currentTimeMillis();
 
-            new CountDownTimer(mainMillis, 1000){
+            new CountDownTimer(mainMillis, 1000) {
 
                 @Override
 
                 public void onTick(long millisUntilFinished) {
                     /*            converting the milliseconds into days, hours, minutes and seconds and displaying it in textviews             */
 
-                    holder.days.setText("Days " + TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"");
+                    holder.days.setText("Days " + TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + "");
 
-                    holder.hours.setText("Hours " + ( TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"");
+                    holder.hours.setText("Hours " + (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished))) + "");
 
-                    holder.minutes.setText("Minutes " +(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)))+"");
+                    holder.minutes.setText("Minutes " + (TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + "");
 
                 }
 
 
+                @SuppressLint("Assert")
                 @Override
                 public void onFinish() {
                     /*            clearing all fields and displaying countdown finished message             */
@@ -131,16 +131,12 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         }
 
 
-
-
         imageUrl = toDo_model.getImgUrl();
         String timeStamp = (String) DateUtils.getRelativeTimeSpanString(toDo_model.getTimestamp().getSeconds() * 1000);
 
         holder.dateAdded.setText(timeStamp);
 
         Picasso.get().load(imageUrl).placeholder(R.drawable.coloss).centerCrop().fit().into(holder.imageView);
-
-
 
 
         holder.doneView.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +156,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
                             public void run() {
                                 removeAt(position);
                             }
-                        },2000);
+                        }, 2000);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -216,7 +212,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
             todoTitle = itemView.findViewById(R.id.todoTitle);
             todoDescription = itemView.findViewById(R.id.todoDescription);
             dateAdded = itemView.findViewById(R.id.todoDateTV);
-            name =  itemView.findViewById(R.id.todoUserNameTV);
+            name = itemView.findViewById(R.id.todoUserNameTV);
 
             days = itemView.findViewById(R.id.todoTimerDays);
             hours = itemView.findViewById(R.id.todoTimerHours);
@@ -228,12 +224,11 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         }
     }
 
-    private void removeAt(int position){
+    private void removeAt(int position) {
         toDo_models.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, toDo_models.size());
 
     }
-
 
 }

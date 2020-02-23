@@ -1,6 +1,9 @@
 package com.capturetodo.utils;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 
 public class CaptureToDoApi extends Application {
 
@@ -16,6 +19,12 @@ public class CaptureToDoApi extends Application {
             captureToDoApi = new CaptureToDoApi();
         }
         return captureToDoApi ;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        createNotfication();
     }
 
     public CaptureToDoApi() {
@@ -51,5 +60,23 @@ public class CaptureToDoApi extends Application {
 
     public void setDocPath(String docPath) {
         this.docPath = docPath;
+    }
+
+    private void createNotfication(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(
+                    "R_TODO_1",
+                    "R_TODO_1",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+
+            channel.setDescription("Reminder TODOS");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+
+        }
     }
 }

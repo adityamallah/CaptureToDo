@@ -6,6 +6,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.icu.text.DateFormat;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.capturetodo.model.ToDo_Model;
+import com.capturetodo.notification.AlertReciver;
 import com.capturetodo.utils.CaptureToDoApi;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -183,6 +187,16 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
         if(mAuth != null){
             mAuth.removeAuthStateListener(authStateListener);
         }
+    }
+
+    //Create Notifications and reminder
+    private void notifuss(long time){
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReciver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
     /// On click for all ids HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -361,6 +375,9 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                             Long myTimerData = daysNumber + (hoursNumber + minutesNumber);
                             Long MainDataTime = System.currentTimeMillis() + myTimerData;
 
+                            //Sending Notification
+                            notifuss(MainDataTime);
+
                             // Create a calendar object that will convert the date and time value
                             // in milliseconds to date. We use the setTimeInMillis() method of the
                             // Calendar object.
@@ -384,6 +401,8 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                             toDoModel.setTimerHours(sTHours);
                             toDoModel.setTimerMinutes(sTMinutes);
                             toDoModel.setMainTimer(timstampSS);
+
+
 
                             //Collection reference with Document reference revoke here
                             dr.set(toDoModel).addOnSuccessListener(new OnSuccessListener<Void>() {
