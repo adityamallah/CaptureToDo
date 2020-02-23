@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
@@ -44,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Post_Area extends AppCompatActivity implements View.OnClickListener {
@@ -254,7 +256,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
     }
 
     private void submitBtnVerify(){
-
+        submit.setEnabled(false);
         final String sTitle = title.getText().toString().trim();
         final String sDescription = description.getText().toString().trim();
         final String sTDays = tDays.getText().toString().trim();
@@ -270,6 +272,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             tHours.setError("Please set hour");
             tMinutes.setError("Please set minutes");
             Toast.makeText(this, "Please enter you TODO", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
 
         }
@@ -277,44 +280,54 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
             title.setError("Please enter your title here");
             Toast.makeText(this,
                     "Please enter your title.", Toast.LENGTH_LONG).show();
+            submit.setEnabled(true);
             return;
         }
         if(TextUtils.isEmpty(sDescription)){
             description.setError("Please enter your description here");
             Toast.makeText(this,
                     "Please enter your description.", Toast.LENGTH_LONG).show();
+            submit.setEnabled(true);
             return;
         }
         if(TextUtils.isEmpty(sTDays)){
             tDays.setError("Please set day");
             Toast.makeText(this, "Please set day", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
         }
         if(TextUtils.isEmpty(sTHours)){
             tHours.setError("Please set hour");
             Toast.makeText(this, "Please set hour", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
         }
         if(TextUtils.isEmpty(sTMinutes)){
             tMinutes.setError("Please set minute");
             Toast.makeText(this, "Please set minute", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
         }
         if(Integer.parseInt(sTDays) > 30){
             tDays.setError("Days should not be more then 30");
             Toast.makeText(this, "Days should not be more then 30", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
+
         }
         if(Integer.parseInt(sTHours) > 24){
             tHours.setError("Hours should not be more then 24");
             Toast.makeText(this, "Hours should not be more then 24", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
             return;
         }
         if(Integer.parseInt(sTMinutes) > 60){
             tMinutes.setError("Minutes should not be more then 60");
             Toast.makeText(Post_Area.this, "Minutes should not be more then 60", Toast.LENGTH_SHORT).show();
+            submit.setEnabled(true);
         }
         else {
+            submit.setEnabled(false);
             pLoader.setVisibility(View.VISIBLE);
             final StorageReference fiePath = storageReference.child("TODO_Images").child("TODOIMAGE"
                     + Timestamp.now().getSeconds());
@@ -328,11 +341,33 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
 
 
                     fiePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onSuccess(Uri uri) {
 
                             String imageUrls = uri.toString();
                             Timestamp timeStamp = Timestamp.now();
+
+                            Long daysNumber = Long.parseLong(sTDays) * 86400000;
+                            Long hoursNumber = Long.parseLong(sTHours) * 3600000;
+                            Long minutesNumber = Long.parseLong(sTMinutes) * 60000;
+
+
+
+                            // Create a DateFormatter object for displaying date information.
+                            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+
+                            // Get date and time information in milliseconds
+                            Long myTimerData = daysNumber + (hoursNumber + minutesNumber);
+                            Long MainDataTime = System.currentTimeMillis() + myTimerData;
+
+                            // Create a calendar object that will convert the date and time value
+                            // in milliseconds to date. We use the setTimeInMillis() method of the
+                            // Calendar object.
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(MainDataTime);
+
+                            String timstampSS = formatter.format(calendar.getTime());
 
 
                             //Saving data in objects
@@ -348,6 +383,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                             toDoModel.setTimerDays(sTDays);
                             toDoModel.setTimerHours(sTHours);
                             toDoModel.setTimerMinutes(sTMinutes);
+                            toDoModel.setMainTimer(timstampSS);
 
                             //Collection reference with Document reference revoke here
                             dr.set(toDoModel).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -364,6 +400,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     pLoader.setVisibility(View.INVISIBLE);
+                                    submit.setEnabled(true);
                                     Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
                                 }
                             });
@@ -376,6 +413,7 @@ public class Post_Area extends AppCompatActivity implements View.OnClickListener
                 public void onFailure(@NonNull Exception e) {
                     pLoader.setVisibility(View.INVISIBLE);
                     Toast.makeText(Post_Area.this, "Failed to post your todo. Please try again", Toast.LENGTH_LONG).show();
+                    submit.setEnabled(true);
                 }
             });
 

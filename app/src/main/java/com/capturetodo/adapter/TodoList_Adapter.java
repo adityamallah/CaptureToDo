@@ -20,17 +20,21 @@ import com.capturetodo.R;
 import com.capturetodo.model.ToDo_Model;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.type.Date;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,35 +90,46 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         Long minutesNumber = Long.parseLong(toDo_model.getTimerMinutes()) * 60000;
 
         Long addedData = daysNumber + (hoursNumber + minutesNumber);
-        Log.d("TIIME", "onBindViewHolder: " + addedData.toString());
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+        try {
+            Date main =  formatter.parse(toDo_model.getMainTimer());
+
+            assert main != null;
+            long mainMillis =  main.getTime() - System.currentTimeMillis();
+
+            new CountDownTimer(mainMillis, 1000){
+
+                @Override
+
+                public void onTick(long millisUntilFinished) {
+                    /*            converting the milliseconds into days, hours, minutes and seconds and displaying it in textviews             */
+
+                    holder.days.setText("Days " + TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"");
+
+                    holder.hours.setText("Hours " + ( TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"");
+
+                    holder.minutes.setText("Minutes " +(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)))+"");
+
+                }
 
 
-        new CountDownTimer(addedData, 1000){
+                @Override
+                public void onFinish() {
+                    /*            clearing all fields and displaying countdown finished message             */
 
-            @Override
+                    holder.days.setText("Days 0");
+                    holder.hours.setText("Hours 0");
+                    holder.minutes.setText("Minutes 0");
+                }
 
-            public void onTick(long millisUntilFinished) {
-                /*            converting the milliseconds into days, hours, minutes and seconds and displaying it in textviews             */
-
-                holder.days.setText("Days " + TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"");
-
-                holder.hours.setText("Hours " + ( TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"");
-
-                holder.minutes.setText("Minutes " +(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)))+"");
-
-            }
+            }.start();
 
 
-            @Override
-            public void onFinish() {
-                /*            clearing all fields and displaying countdown finished message             */
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-                holder.days.setText("Days 0");
-                holder.hours.setText("Hours 0");
-                holder.minutes.setText("Minutes 0");
-            }
-
-        }.start();
 
 
 

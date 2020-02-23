@@ -37,6 +37,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
 
     //TextView widgets
     private TextView newUserView;
+    private final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Timeline.this);
 
     //Firebase widgets
     private FirebaseAuth mAuth;
@@ -64,8 +65,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
         newUserView = findViewById(R.id.timeLineNewUserText);
 
         toDo_models = new ArrayList<>();
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Timeline.this);
-        linearLayoutManager.setReverseLayout(true);
         recyclerView = findViewById(R.id.timelineRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -140,10 +139,15 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
                     }
 
                     Log.d("HOLO", "onCreate: " + toDo_models.get(0).getTimerDays());
+
+                    if(toDo_models.size() >= 2){
+                        linearLayoutManager.setReverseLayout(true);
+                        recyclerView.scrollToPosition(toDo_models.size() - 1 );
+                    }
+
                     adapter = new TodoList_Adapter(Timeline.this, toDo_models);
 
                     recyclerView.setAdapter(adapter);
-                    recyclerView.scrollToPosition(toDo_models.size() - 1 );
                     adapter.notifyDataSetChanged();
 
 
