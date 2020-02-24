@@ -5,17 +5,30 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.format.DateUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capturetodo.R;
@@ -30,11 +43,22 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.squareup.picasso.Picasso.*;
 
 public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.ViewHolder> {
 
@@ -132,11 +156,11 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
 
         imageUrl = toDo_model.getImgUrl();
-        String timeStamp = (String) DateUtils.getRelativeTimeSpanString(toDo_model.getTimestamp().getSeconds() * 1000);
+        final String timeStamp = (String) DateUtils.getRelativeTimeSpanString(toDo_model.getTimestamp().getSeconds() * 1000);
 
         holder.dateAdded.setText(timeStamp);
 
-        Picasso.get().load(imageUrl).placeholder(R.drawable.coloss).centerCrop().fit().into(holder.imageView);
+        get().load(imageUrl).placeholder(R.drawable.coloss).centerCrop().fit().into(holder.imageView);
 
 
         holder.doneView.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +217,52 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
 
         });
+
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, "Working Fine", Toast.LENGTH_SHORT).show();
+                //loadView(holder.mainCard);
+
+                final LayoutInflater  inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LinearLayout a = (LinearLayout) inflater.inflate(R.layout.sharelayout, null);
+
+                TextView description = a.findViewById(R.id.todoDescription);
+                TextView title = a.findViewById(R.id.todoTitle);
+                TextView toDoDate = a.findViewById(R.id.todoDateTV);
+                ImageView share = a.findViewById(R.id.todoShare);
+                ImageView done = a.findViewById(R.id.todoDone);
+                TextView username = a.findViewById(R.id.todoUserNameTV);
+                TextView days = a.findViewById(R.id.todoTimerDays);
+                TextView minutes = a.findViewById(R.id.todoTimerMinutes);
+                TextView hours = a.findViewById(R.id.todoTimerHours);
+                ImageView imagessss = a.findViewById(R.id.todoImageView);
+
+                Picasso.get().load(toDo_model.getImgUrl()).placeholder(R.drawable.coloss).into(imagessss);
+
+
+
+                title.setText(toDo_model.getTitle());
+                description.setText(toDo_model.getDescription());
+                share.setVisibility(View.INVISIBLE);
+                done.setVisibility(View.INVISIBLE);
+                toDoDate.setText(timeStamp);
+                username.setText(toDo_model.getFullName());
+                days.setText( "Days "+toDo_model.getTimerDays());
+                minutes.setText("Minutes "+toDo_model.getTimerMinutes());
+                hours.setText("Hours "+toDo_model.getTimerHours());
+
+
+
+                //Toast.makeText(context,  mm.getPath(), Toast.LENGTH_LONG).show();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, loadBitmapFromView(a)));
+                shareIntent.setType("image/*");
+                context.startActivity(Intent.createChooser(shareIntent, "Share via"));
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -202,8 +271,10 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView todoTitle, todoDescription, name, dateAdded, days, hours, minutes;
-        public ImageView imageView, doneView;
+        private TextView todoTitle, todoDescription, name, dateAdded, days, hours, minutes;
+        private ImageView imageView, doneView, share;
+        private CardView mainCard;
+        private LinearLayout shareLa;
 
 
         public ViewHolder(@NonNull View itemView, Context context) {
@@ -220,6 +291,15 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
             imageView = itemView.findViewById(R.id.todoImageView);
             doneView = itemView.findViewById(R.id.todoDone);
+            share = itemView.findViewById(R.id.todoShare);
+
+            mainCard = itemView.findViewById(R.id.todoListCardViewMain);
+            shareLa = itemView.findViewById(R.id.sharelayout);
+
+
+
+
+
 
         }
     }
@@ -231,4 +311,34 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(),
+                    inImage, "", "");
+            return Uri.parse(path);
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return null;
+    }
+
+
+    private Bitmap loadBitmapFromView(View v) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        v.measure(View.MeasureSpec.makeMeasureSpec(dm.widthPixels, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(dm.heightPixels, View.MeasureSpec.EXACTLY));
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        Bitmap returnedBitmap = Bitmap.createBitmap(v.getMeasuredWidth(),
+                v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(returnedBitmap);
+        v.draw(c);
+
+        return returnedBitmap;
+    }
+
+
+
 }
+
