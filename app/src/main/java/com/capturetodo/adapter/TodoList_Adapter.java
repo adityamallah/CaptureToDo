@@ -1,19 +1,17 @@
 package com.capturetodo.adapter;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.CountDownTimer;
-import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
@@ -26,14 +24,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capturetodo.R;
 import com.capturetodo.model.ToDo_Model;
-import com.capturetodo.notification.AlertReciver;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,30 +41,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.squareup.picasso.Picasso.*;
+import static com.squareup.picasso.Picasso.get;
 
 public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.ViewHolder> {
 
     private Context context;
     private List<ToDo_Model> toDo_models;
     private String imagePathRemove = null;
-
-
 
 
     private FirebaseAuth mAuth;
@@ -97,6 +85,21 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         final ToDo_Model toDo_model = toDo_models.get(position);
         String imageUrl;
 
+        //Sharing Data
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LinearLayout a = (LinearLayout) inflater.inflate(R.layout.sharelayout, null);
+
+        final TextView sdescription = a.findViewById(R.id.todoDescription);
+        final TextView stitle = a.findViewById(R.id.todoTitle);
+        final TextView stoDoDate = a.findViewById(R.id.todoDateTV);
+        final ImageView sshare = a.findViewById(R.id.todoShare);
+        final ImageView sdone = a.findViewById(R.id.todoDone);
+        final TextView susername = a.findViewById(R.id.todoUserNameTV);
+        final TextView sdays = a.findViewById(R.id.todoTimerDays);
+        final TextView sminutes = a.findViewById(R.id.todoTimerMinutes);
+        final TextView shours = a.findViewById(R.id.todoTimerHours);
+        final ImageView simagessss = a.findViewById(R.id.todoImageView);
+
 
         holder.todoTitle.setText(toDo_model.getTitle());
         holder.todoDescription.setText(toDo_model.getDescription());
@@ -112,6 +115,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
 
         Long addedData = daysNumber + (hoursNumber + minutesNumber);
 
+        Picasso.get().load(toDo_model.getImgUrl()).into(simagessss);
 
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
@@ -219,40 +223,29 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         });
 
         holder.share.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "Working Fine", Toast.LENGTH_SHORT).show();
                 //loadView(holder.mainCard);
 
-                final LayoutInflater  inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LinearLayout a = (LinearLayout) inflater.inflate(R.layout.sharelayout, null);
+                if(ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
 
-                TextView description = a.findViewById(R.id.todoDescription);
-                TextView title = a.findViewById(R.id.todoTitle);
-                TextView toDoDate = a.findViewById(R.id.todoDateTV);
-                ImageView share = a.findViewById(R.id.todoShare);
-                ImageView done = a.findViewById(R.id.todoDone);
-                TextView username = a.findViewById(R.id.todoUserNameTV);
-                TextView days = a.findViewById(R.id.todoTimerDays);
-                TextView minutes = a.findViewById(R.id.todoTimerMinutes);
-                TextView hours = a.findViewById(R.id.todoTimerHours);
-                ImageView imagessss = a.findViewById(R.id.todoImageView);
+                }else{
+                        requestStoragePermission();
+                        return;
+                }
 
-                Picasso.get().load(toDo_model.getImgUrl()).placeholder(R.drawable.coloss).into(imagessss);
-
-
-
-                title.setText(toDo_model.getTitle());
-                description.setText(toDo_model.getDescription());
-                share.setVisibility(View.INVISIBLE);
-                done.setVisibility(View.INVISIBLE);
-                toDoDate.setText(timeStamp);
-                username.setText(toDo_model.getFullName());
-                days.setText( "Days "+toDo_model.getTimerDays());
-                minutes.setText("Minutes "+toDo_model.getTimerMinutes());
-                hours.setText("Hours "+toDo_model.getTimerHours());
-
-
+                stitle.setText(toDo_model.getTitle());
+                sdescription.setText(toDo_model.getDescription());
+                sshare.setVisibility(View.INVISIBLE);
+                sdone.setVisibility(View.INVISIBLE);
+                stoDoDate.setText(timeStamp);
+                susername.setText(toDo_model.getFullName());
+                sdays.setText("Days " + toDo_model.getTimerDays());
+                sminutes.setText("Minutes " + toDo_model.getTimerMinutes());
+                shours.setText("Hours " + toDo_model.getTimerHours());
 
                 //Toast.makeText(context,  mm.getPath(), Toast.LENGTH_LONG).show();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -297,10 +290,6 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
             shareLa = itemView.findViewById(R.id.sharelayout);
 
 
-
-
-
-
         }
     }
 
@@ -318,7 +307,7 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
             String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(),
                     inImage, "", "");
             return Uri.parse(path);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         return null;
@@ -338,7 +327,29 @@ public class TodoList_Adapter extends RecyclerView.Adapter<TodoList_Adapter.View
         return returnedBitmap;
     }
 
+    private void requestStoragePermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            new AlertDialog.Builder(context)
+                    .setTitle("Permission needed")
+                    .setMessage("To share your TODOS we need permission to store data.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }
+                    }).setNegativeButton("cancle", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create().show();
+        }else{
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
+        }
+
+    }
 
 }
 

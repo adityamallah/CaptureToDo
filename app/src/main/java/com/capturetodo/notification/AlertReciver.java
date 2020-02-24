@@ -10,13 +10,14 @@ package com.capturetodo.notification;
         import androidx.core.app.NotificationManagerCompat;
 
         import com.capturetodo.R;
+        import com.capturetodo.SplashScreen;
         import com.capturetodo.Timeline;
 
 public class AlertReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        PendingIntent i = PendingIntent.getActivity(context, 0, new Intent(context, Timeline.class), 0);
+        PendingIntent i = PendingIntent.getActivity(context, 0, new Intent(context, SplashScreen.class), 0);
 
         Notification notification = new NotificationCompat.Builder(context, "R_TODO_1")
                 .setSmallIcon(R.mipmap.ic_launcher)

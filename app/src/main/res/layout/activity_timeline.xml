@@ -97,7 +97,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:adSize="BANNER"
-                    app:adUnitId="@string/banner_ad_unit_id"/>
+                    app:adUnitId="@string/banner_ad_unit_id">
+
+                </com.google.android.gms.ads.AdView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.capturetodo.R;
+import com.capturetodo.SplashScreen;
 import com.capturetodo.Timeline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -29,7 +30,7 @@ public class Notification extends FirebaseMessagingService {
     }
 
     private void generateNotification(String body, String title) {
-        Intent i = new Intent(this, Timeline.class);
+        Intent i = new Intent(this, SplashScreen.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
