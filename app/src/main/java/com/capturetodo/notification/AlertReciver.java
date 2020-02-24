@@ -19,9 +19,9 @@ public class AlertReciver extends BroadcastReceiver {
         PendingIntent i = PendingIntent.getActivity(context, 0, new Intent(context, Timeline.class), 0);
 
         Notification notification = new NotificationCompat.Builder(context, "R_TODO_1")
-                .setSmallIcon(R.drawable.background_gradient)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Please Check Your TODO List")
-                .setContentText("Your TODO needs to be completed before times up")
+                .setContentText("Your TODOS needs to be completed before times up......")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentIntent(i)

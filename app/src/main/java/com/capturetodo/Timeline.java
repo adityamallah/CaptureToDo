@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.capturetodo.adapter.TodoList_Adapter;
 import com.capturetodo.model.ToDo_Model;
 import com.capturetodo.utils.CaptureToDoApi;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,12 +51,18 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener 
     private RecyclerView recyclerView;
     private TodoList_Adapter adapter;
 
+    private AdView mAdView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         mAuth = FirebaseAuth.getInstance();
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         //Widgets find view by id

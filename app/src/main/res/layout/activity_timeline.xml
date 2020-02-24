@@ -19,32 +19,32 @@
             android:layout_marginTop="5dp"
             android:text="CAPTURETODO"
             android:textColor="@color/colorWhite"
-            android:textSize="29sp"
+            android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/timelineLogout"
             app:layout_constraintStart_toEndOf="@+id/timelineAdd"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/timelineLogout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_exit_to_app_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_exit_to_app_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/timelineLogo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </ImageView>
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <ImageView
             android:id="@+id/timelineAdd"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/ic_library_add_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/timelineLogo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </ImageView>
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -86,6 +86,19 @@
                     app:layout_constraintStart_toStartOf="@+id/timelineRecyclerView"
                     app:layout_constraintTop_toTopOf="@+id/timelineRecyclerView">
                 </TextView>
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/timelineRecyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:adSize="BANNER"
+                    app:adUnitId="@string/banner_ad_unit_id"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -61,6 +61,12 @@
         </provider>
 
         <receiver android:name=".notification.AlertReciver"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3623273977227406~5660818113"/>
     </application>
 
 </manifest>
